@@ -43,7 +43,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
       Guid emailTemplateId,
       JsonPatchDocument<EditEmailTemplateRequest> patch)
     {
-      if (!_accessValidator.HasRights(Rights.AddEditRemoveEmailTemplates))
+      if (!(await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates)))
       {
         _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
