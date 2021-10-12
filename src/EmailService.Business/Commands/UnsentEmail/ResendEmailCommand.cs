@@ -33,7 +33,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
       {
         _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
 
-        return new OperationResultResponse<bool>
+        return new()
         {
           Status = OperationResultStatusType.Failed,
           Errors = new() { "Not enough rights." }
@@ -42,7 +42,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
 
       bool isSuccess = await _emailSender.ResendEmail(id);
 
-      return new OperationResultResponse<bool>
+      return new()
       {
         Status = isSuccess ? OperationResultStatusType.FullSuccess : OperationResultStatusType.Failed,
         Body = isSuccess

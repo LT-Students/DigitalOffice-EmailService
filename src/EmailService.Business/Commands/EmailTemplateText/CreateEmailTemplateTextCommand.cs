@@ -44,7 +44,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplateText
       {
         _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
 
-        return new OperationResultResponse<Guid?>
+        return new()
         {
           Status = OperationResultStatusType.Failed,
           Errors = new() { "Not enough rights." }
@@ -55,7 +55,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplateText
       {
         _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
-        return new OperationResultResponse<Guid?>
+        return new()
         {
           Status = OperationResultStatusType.Failed,
           Errors = errors

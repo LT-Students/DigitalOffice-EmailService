@@ -30,7 +30,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
       {
         _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
 
-        return new OperationResultResponse<Dictionary<string, Dictionary<string, List<string>>>>
+        return new()
         {
           Status = OperationResultStatusType.Failed,
           Errors = new() { "Not enough rights." }
@@ -49,7 +49,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
         }
       }
 
-      return new OperationResultResponse<Dictionary<string, Dictionary<string, List<string>>>>
+      return new()
       {
         Status = OperationResultStatusType.FullSuccess,
         Body = response

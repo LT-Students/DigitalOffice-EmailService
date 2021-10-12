@@ -10,8 +10,10 @@ using LT.DigitalOffice.EmailService.Models.Dto;
 using LT.DigitalOffice.Kernel.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
 using LT.DigitalOffice.Kernel.Enums;
+using LT.DigitalOffice.Kernel.FluentValidationExtensions;
 using LT.DigitalOffice.Kernel.Requests;
 using LT.DigitalOffice.Kernel.Responses;
+using LT.DigitalOffice.Kernel.Validators.Interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
@@ -19,17 +21,20 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
   public class FindKeywordCommand : IFindKeywordCommand
   {
     private readonly IAccessValidator _accessValidator;
+    private readonly IBaseFindFilterValidator _baseFindValidator;
     private readonly IKeywordRepository _repository;
     private readonly IKeywordInfoMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public FindKeywordCommand(
       IAccessValidator accessValidator,
+      IBaseFindFilterValidator baseFindValidator,
       IKeywordRepository repository,
       IKeywordInfoMapper mapper,
       IHttpContextAccessor httpContextAccessor)
     {
       _accessValidator = accessValidator;
+      _baseFindValidator = baseFindValidator;
       _repository = repository;
       _mapper = mapper;
       _httpContextAccessor = httpContextAccessor;
@@ -41,10 +46,21 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
       {
         _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
 
-        return new FindResultResponse<KeywordInfo>
+        return new()
         {
           Status = OperationResultStatusType.Failed,
           Errors = new() { "Not enough rights." }
+        };
+      }
+
+      if (!_baseFindValidator.ValidateCustom(filter, out List<string> errors))
+      {
+        _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+        return new()
+        {
+          Status = OperationResultStatusType.Failed,
+          Errors = errors
         };
       }
 

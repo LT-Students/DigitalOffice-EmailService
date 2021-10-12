@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate.Interfaces;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
@@ -8,26 +9,44 @@ using LT.DigitalOffice.EmailService.Models.Db;
 using LT.DigitalOffice.EmailService.Models.Dto.Models;
 using LT.DigitalOffice.EmailService.Models.Dto.Requests.EmailTemplate;
 using LT.DigitalOffice.Kernel.Enums;
+using LT.DigitalOffice.Kernel.FluentValidationExtensions;
 using LT.DigitalOffice.Kernel.Responses;
+using LT.DigitalOffice.Kernel.Validators.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
 {
   public class FindEmailTemplateCommand : IFindEmailTemplateCommand
   {
+    private readonly IBaseFindFilterValidator _baseFindValidator;
     private readonly IEmailTemplateRepository _repository;
     private readonly IEmailTemplateInfoMapper _mapper;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public FindEmailTemplateCommand(
+      IBaseFindFilterValidator baseFindValidator,
       IEmailTemplateRepository repository,
-      IEmailTemplateInfoMapper mapper)
+      IEmailTemplateInfoMapper mapper,
+      IHttpContextAccessor httpContextAccessor)
     {
+      _baseFindValidator = baseFindValidator;
       _repository = repository;
       _mapper = mapper;
+      _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<FindResultResponse<EmailTemplateInfo>> ExecuteAsync(FindEmailTemplateFilter filter)
     {
       FindResultResponse<EmailTemplateInfo> response = new();
+
+      if (!_baseFindValidator.ValidateCustom(filter, out List<string> errors))
+      {
+        _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+        response.Status = OperationResultStatusType.Failed;
+        response.Errors = errors;
+        return response;
+      }
 
       (List<DbEmailTemplate> dbEmailTempates, int totalCount) repositoryResponse =
         await _repository.FindAsync(filter);

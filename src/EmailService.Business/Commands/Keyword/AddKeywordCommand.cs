@@ -44,7 +44,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
       {
         _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
 
-        return new OperationResultResponse<Guid?>
+        return new()
         {
           Status = OperationResultStatusType.Failed,
           Errors = new() { "Not enough rights." }
@@ -57,7 +57,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
       {
         _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
-        return new OperationResultResponse<Guid?>
+        return new()
         {
           Status = OperationResultStatusType.Failed,
           Errors = validationResult.Errors.Select(vf => vf.ErrorMessage).ToList()
