@@ -10,7 +10,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate.Interfac
   [AutoInject]
   public interface IEditEmailTemplateCommand
   {
-    Task<OperationResultResponse<bool>> Execute(
+    Task<OperationResultResponse<bool>> ExecuteAsync(
       Guid emailTemplateId,
       JsonPatchDocument<EditEmailTemplateRequest> patch);
   }

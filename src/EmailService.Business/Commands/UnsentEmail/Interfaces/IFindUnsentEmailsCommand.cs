@@ -9,6 +9,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail.Interfaces
   [AutoInject]
   public interface IFindUnsentEmailsCommand
   {
-    Task<FindResultResponse<UnsentEmailInfo>> Execute(BaseFindFilter filter);
+    Task<FindResultResponse<UnsentEmailInfo>> ExecuteAsync(BaseFindFilter filter);
   }
 }

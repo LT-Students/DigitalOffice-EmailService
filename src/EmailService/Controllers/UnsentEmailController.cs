@@ -17,7 +17,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
       [FromServices] IResendEmailCommand command,
       [FromQuery] Guid unsentEmailId)
     {
-      return await command.Execute(unsentEmailId);
+      return await command.ExecuteAsync(unsentEmailId);
     }
 
     [HttpGet("find")]
@@ -25,7 +25,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
       [FromServices] IFindUnsentEmailsCommand command,
       [FromQuery] BaseFindFilter filter)
     {
-      return await command.Execute(filter);
+      return await command.ExecuteAsync(filter);
     }
   }
 }

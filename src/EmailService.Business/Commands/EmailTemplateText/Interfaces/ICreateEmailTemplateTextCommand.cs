@@ -9,6 +9,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplateText.Inte
   [AutoInject]
   public interface ICreateEmailTemplateTextCommand
   {
-    Task<OperationResultResponse<Guid?>> Execute(EmailTemplateTextRequest request);
+    Task<OperationResultResponse<Guid?>> ExecuteAsync(EmailTemplateTextRequest request);
   }
 }

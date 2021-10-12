@@ -8,6 +8,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity.Interface
   [AutoInject]
   public interface IFindParseEntitiesCommand
   {
-    Task<OperationResultResponse<Dictionary<string, Dictionary<string, List<string>>>>> Execute();
+    Task<OperationResultResponse<Dictionary<string, Dictionary<string, List<string>>>>> ExecuteAsync();
   }
 }

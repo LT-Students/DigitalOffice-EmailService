@@ -35,7 +35,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
       _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<FindResultResponse<KeywordInfo>> Execute(BaseFindFilter filter)
+    public async Task<FindResultResponse<KeywordInfo>> ExecuteAsync(BaseFindFilter filter)
     {
       if (!(await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates)))
       {

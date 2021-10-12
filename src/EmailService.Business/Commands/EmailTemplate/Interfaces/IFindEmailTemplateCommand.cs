@@ -9,6 +9,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate.Interfac
   [AutoInject]
   public interface IFindEmailTemplateCommand
   {
-    Task<FindResultResponse<EmailTemplateInfo>> Execute(FindEmailTemplateFilter filter);
+    Task<FindResultResponse<EmailTemplateInfo>> ExecuteAsync(FindEmailTemplateFilter filter);
   }
 }

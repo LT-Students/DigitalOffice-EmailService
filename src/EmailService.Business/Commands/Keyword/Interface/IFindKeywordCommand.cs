@@ -9,6 +9,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity.Interface
   [AutoInject]
   public interface IFindKeywordCommand
   {
-    Task<FindResultResponse<KeywordInfo>> Execute(BaseFindFilter filter);
+    Task<FindResultResponse<KeywordInfo>> ExecuteAsync(BaseFindFilter filter);
   }
 }

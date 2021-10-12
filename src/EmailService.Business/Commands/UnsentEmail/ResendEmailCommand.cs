@@ -27,7 +27,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
       _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<OperationResultResponse<bool>> Execute(Guid id)
+    public async Task<OperationResultResponse<bool>> ExecuteAsync(Guid id)
     {
       if (!(await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates)))
       {

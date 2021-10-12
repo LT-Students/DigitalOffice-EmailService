@@ -35,7 +35,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
       _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<FindResultResponse<UnsentEmailInfo>> Execute(BaseFindFilter filter)
+    public async Task<FindResultResponse<UnsentEmailInfo>> ExecuteAsync(BaseFindFilter filter)
     {
       if (!(await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates)))
       {

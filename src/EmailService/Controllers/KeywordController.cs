@@ -19,7 +19,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
     public async Task<OperationResultResponse<Dictionary<string, Dictionary<string, List<string>>>>> FindParseEntities(
       [FromServices] IFindParseEntitiesCommand command)
     {
-      return await command.Execute();
+      return await command.ExecuteAsync();
     }
 
     [HttpGet("Find")]
@@ -27,7 +27,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
       [FromServices] IFindKeywordCommand command,
       [FromQuery] BaseFindFilter filter)
     {
-      return await command.Execute(filter);
+      return await command.ExecuteAsync(filter);
     }
 
     [HttpPost("Add")]
@@ -35,7 +35,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
       [FromServices] IAddKeywordCommand command,
       [FromBody] AddKeywordRequest request)
     {
-      return await command.Execute(request);
+      return await command.ExecuteAsync(request);
     }
   }
 }

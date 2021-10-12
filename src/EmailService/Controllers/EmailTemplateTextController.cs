@@ -18,7 +18,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
       [FromServices] ICreateEmailTemplateTextCommand command,
       [FromBody] EmailTemplateTextRequest request)
     {
-      return await command.Execute(request);
+      return await command.ExecuteAsync(request);
     }
 
     [HttpPatch("edit")]
@@ -27,7 +27,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
       [FromQuery] Guid emailTemplateTextId,
       [FromBody] JsonPatchDocument<EditEmailTemplateTextRequest> patch)
     {
-      return await command.Execute(emailTemplateTextId, patch);
+      return await command.ExecuteAsync(emailTemplateTextId, patch);
     }
   }
 }

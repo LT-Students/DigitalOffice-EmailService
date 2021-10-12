@@ -39,7 +39,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
       _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<OperationResultResponse<bool>> Execute(
+    public async Task<OperationResultResponse<bool>> ExecuteAsync(
       Guid emailTemplateId,
       JsonPatchDocument<EditEmailTemplateRequest> patch)
     {

@@ -24,7 +24,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
       _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<OperationResultResponse<Dictionary<string, Dictionary<string, List<string>>>>> Execute()
+    public async Task<OperationResultResponse<Dictionary<string, Dictionary<string, List<string>>>>> ExecuteAsync()
     {
       if (!(await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates)))
       {

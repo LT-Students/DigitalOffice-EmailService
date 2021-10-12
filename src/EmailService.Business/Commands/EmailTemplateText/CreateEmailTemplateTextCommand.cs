@@ -38,7 +38,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplateText
       _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<OperationResultResponse<Guid?>> Execute(EmailTemplateTextRequest request)
+    public async Task<OperationResultResponse<Guid?>> ExecuteAsync(EmailTemplateTextRequest request)
     {
       if (!(await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates)))
       {

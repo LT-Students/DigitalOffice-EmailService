@@ -9,6 +9,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity.Interface
   [AutoInject]
   public interface IAddKeywordCommand
   {
-    Task<OperationResultResponse<Guid?>> Execute(AddKeywordRequest request);
+    Task<OperationResultResponse<Guid?>> ExecuteAsync(AddKeywordRequest request);
   }
 }

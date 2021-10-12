@@ -25,7 +25,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
       _mapper = mapper;
     }
 
-    public async Task<FindResultResponse<EmailTemplateInfo>> Execute(FindEmailTemplateFilter filter)
+    public async Task<FindResultResponse<EmailTemplateInfo>> ExecuteAsync(FindEmailTemplateFilter filter)
     {
       FindResultResponse<EmailTemplateInfo> response = new();
 
