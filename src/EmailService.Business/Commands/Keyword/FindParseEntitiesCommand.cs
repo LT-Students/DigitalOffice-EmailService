@@ -32,8 +32,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
 
         return new()
         {
-          Status = OperationResultStatusType.Failed,
-          Errors = new() { "Not enough rights." }
+          Status = OperationResultStatusType.Failed
         };
       }
 

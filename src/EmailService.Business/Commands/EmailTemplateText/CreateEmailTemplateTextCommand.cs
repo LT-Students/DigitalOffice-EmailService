@@ -46,8 +46,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplateText
 
         return new()
         {
-          Status = OperationResultStatusType.Failed,
-          Errors = new() { "Not enough rights." }
+          Status = OperationResultStatusType.Failed
         };
       }
 
