@@ -10,7 +10,7 @@ namespace LT.DigitalOffice.EmailService.Data.Interfaces
   [AutoInject]
   public interface IUnsentEmailRepository
   {
-    Task AddAsync(DbUnsentEmail email);
+    Task CreateAsync(DbUnsentEmail email);
 
     Task<DbUnsentEmail> GetAsync(Guid id);
 

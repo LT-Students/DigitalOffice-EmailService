@@ -64,6 +64,9 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
       OperationResultResponse<Guid?> response = new();
 
       response.Body = await _repository.CreateAsync(_mapper.Map(request));
+      response.Status = OperationResultStatusType.FullSuccess;
+
+      _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Created;
 
       if (response.Body == null)
       {
@@ -73,9 +76,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
         return response;
       }
 
-      _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Created;
-
-      response.Status = OperationResultStatusType.FullSuccess;
       return response;
     }
   }

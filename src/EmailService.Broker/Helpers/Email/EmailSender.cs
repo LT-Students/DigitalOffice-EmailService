@@ -42,7 +42,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
         return true;
       }
 
-      await _unsentEmailRepository.AddAsync(
+      await _unsentEmailRepository.CreateAsync(
         new DbUnsentEmail
         {
           Id = Guid.NewGuid(),

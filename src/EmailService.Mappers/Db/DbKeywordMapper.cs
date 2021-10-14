@@ -7,7 +7,7 @@ namespace LT.DigitalOffice.EmailService.Mappers.Db
 {
   public class DbKeywordMapper : IDbKeywordMapper
   {
-    public DbKeyword Map(AddKeywordRequest request)
+    public DbKeyword Map(CreateKeywordRequest request)
     {
       if (request == null)
       {

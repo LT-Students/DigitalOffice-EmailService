@@ -20,7 +20,7 @@ namespace LT.DigitalOffice.EmailService.Data
       _provider = provider;
     }
 
-    public async Task AddAsync(DbUnsentEmail email)
+    public async Task CreateAsync(DbUnsentEmail email)
     {
       _provider.UnsentEmails.Add(email);
       await _provider.SaveAsync();

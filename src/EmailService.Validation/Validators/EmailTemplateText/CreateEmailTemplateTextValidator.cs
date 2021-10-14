@@ -8,18 +8,18 @@ namespace LT.DigitalOffice.EmailService.Validation.Validators.EmailTemplateText
   {
     public CreateEmailTemplateTextValidator()
     {
-      RuleFor(x => x.EmailTemplateId)
+      RuleFor(ett => ett.EmailTemplateId)
         .NotEmpty().WithMessage("Email template id must not be empty.");
 
-      RuleFor(x => x.Subject.Trim())
+      RuleFor(ett => ett.Subject)
         .NotEmpty().WithMessage("Subject must not be empty.");
 
-      RuleFor(x => x.Text.Trim())
+      RuleFor(ett => ett.Text)
         .NotEmpty().WithMessage("Text must not be empty.");
 
-      RuleFor(x => x.Language.Trim())
+      RuleFor(ett => ett.Language)
         .NotEmpty().WithMessage("Language must not be empty.")
-        .MaximumLength(2).WithMessage("Language is to long.");
+        .Must(ett => ett.Trim().Length != 2).WithMessage("Language must contain two letters.");
     }
   }
 }

@@ -6,7 +6,7 @@ using LT.DigitalOffice.EmailService.Validation.Validators.ParseEntity.Interfaces
 
 namespace LT.DigitalOffice.EmailService.Validation.Validators.ParseEntity
 {
-  public class AddKeywordRequestValidator : AbstractValidator<AddKeywordRequest>, IAddKeywordRequestValidator
+  public class AddKeywordRequestValidator : AbstractValidator<CreateKeywordRequest>, IAddKeywordRequestValidator
   {
     public AddKeywordRequestValidator(IKeywordRepository repository)
     {
@@ -17,7 +17,7 @@ namespace LT.DigitalOffice.EmailService.Validation.Validators.ParseEntity
         .WithMessage("The keyword already exists.");
 
       RuleFor(x => x.ServiceName)
-        .IsInEnum();
+        .IsInEnum().WithMessage("Incorrect service name type.");
 
       RuleFor(x => x.EntityName)
         .NotEmpty().WithMessage("Entity name must not be empty.");

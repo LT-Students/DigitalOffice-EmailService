@@ -10,7 +10,7 @@ namespace LT.DigitalOffice.EmailService.Data.Interfaces
   [AutoInject]
   public interface IKeywordRepository
   {
-    Task<Guid?> AddAsync(DbKeyword request);
+    Task<Guid?> CreateAsync(DbKeyword request);
 
     Task<DbKeyword> GetAsync(Guid entityId);
 

@@ -15,7 +15,8 @@ namespace LT.DigitalOffice.EmailService.Models.Dto.Helpers
     {
       get
       {
-        return !(string.IsNullOrEmpty(Host) ||
+        return !(
+          string.IsNullOrEmpty(Host) ||
           string.IsNullOrEmpty(Email) ||
           string.IsNullOrEmpty(Password));
       }

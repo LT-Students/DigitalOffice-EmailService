@@ -7,8 +7,8 @@ using LT.DigitalOffice.Kernel.Responses;
 namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity.Interface
 {
   [AutoInject]
-  public interface IAddKeywordCommand
+  public interface ICreateKeywordCommand
   {
-    Task<OperationResultResponse<Guid?>> ExecuteAsync(AddKeywordRequest request);
+    Task<OperationResultResponse<Guid?>> ExecuteAsync(CreateKeywordRequest request);
   }
 }

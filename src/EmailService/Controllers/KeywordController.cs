@@ -23,17 +23,17 @@ namespace LT.DigitalOffice.EmailService.Controllers
     }
 
     [HttpGet("Find")]
-    public async Task<FindResultResponse<KeywordInfo>> FindParsedProperties(
+    public async Task<FindResultResponse<KeywordInfo>> Find(
       [FromServices] IFindKeywordCommand command,
       [FromQuery] BaseFindFilter filter)
     {
       return await command.ExecuteAsync(filter);
     }
 
-    [HttpPost("Add")]
-    public async Task<OperationResultResponse<Guid?>> AddKeyword(
-      [FromServices] IAddKeywordCommand command,
-      [FromBody] AddKeywordRequest request)
+    [HttpPost("Create")]
+    public async Task<OperationResultResponse<Guid?>> Create(
+      [FromServices] ICreateKeywordCommand command,
+      [FromBody] CreateKeywordRequest request)
     {
       return await command.ExecuteAsync(request);
     }

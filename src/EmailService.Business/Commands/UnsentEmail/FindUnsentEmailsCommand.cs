@@ -61,7 +61,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
           Status = OperationResultStatusType.Failed,
           Errors = errors
         };
-
       }
 
       (List<DbUnsentEmail> unsentEmailes, int totalCount) repositoryResponse = await _repository.FindAsync(filter);

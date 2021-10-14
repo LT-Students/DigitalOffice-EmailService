@@ -31,7 +31,9 @@ namespace LT.DigitalOffice.EmailService.Mappers.Models
         IsActive = dbEmailTemplate.IsActive,
         CreatedBy = dbEmailTemplate.CreatedBy,
         CreatedAtUtc = dbEmailTemplate.CreatedAtUtc,
-        Texts = dbEmailTemplate.EmailTemplateTexts?.Select(_mapper.Map).ToList()
+        Texts = dbEmailTemplate.EmailTemplateTexts?
+          .Select(_mapper.Map)
+          .ToList()
       };
     }
   }

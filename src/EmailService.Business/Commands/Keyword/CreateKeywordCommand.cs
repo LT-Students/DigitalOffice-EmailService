@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
 {
-  public class AddKeywordCommand : IAddKeywordCommand
+  public class CreateKeywordCommand : ICreateKeywordCommand
   {
     private readonly IAccessValidator _accessValidator;
     private readonly IKeywordRepository _repository;
@@ -24,7 +24,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
     private readonly IAddKeywordRequestValidator _validator;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AddKeywordCommand(
+    public CreateKeywordCommand(
       IAccessValidator accessValidator,
       IKeywordRepository repository,
       IDbKeywordMapper mapper,
@@ -38,7 +38,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
       _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<OperationResultResponse<Guid?>> ExecuteAsync(AddKeywordRequest request)
+    public async Task<OperationResultResponse<Guid?>> ExecuteAsync(CreateKeywordRequest request)
     {
       if (!(await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates)))
       {
@@ -65,7 +65,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
 
       OperationResultResponse<Guid?> response = new();
 
-      response.Body = await _repository.AddAsync(_mapper.Map(request));
+      response.Body = await _repository.CreateAsync(_mapper.Map(request));
       response.Status = OperationResultStatusType.FullSuccess;
 
       _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Created;

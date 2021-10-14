@@ -19,7 +19,7 @@ namespace LT.DigitalOffice.EmailService.Data
       _provider = provider;
     }
 
-    public async Task<Guid?> AddAsync(DbKeyword request)
+    public async Task<Guid?> CreateAsync(DbKeyword request)
     {
       if (request == null)
       {

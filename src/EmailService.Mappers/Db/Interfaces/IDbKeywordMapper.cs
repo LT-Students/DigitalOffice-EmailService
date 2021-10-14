@@ -7,6 +7,6 @@ namespace LT.DigitalOffice.EmailService.Mappers.Db.Interfaces
   [AutoInject]
   public interface IDbKeywordMapper
   {
-    DbKeyword Map(AddKeywordRequest request);
+    DbKeyword Map(CreateKeywordRequest request);
   }
 }
