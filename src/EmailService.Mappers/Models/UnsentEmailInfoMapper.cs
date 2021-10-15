@@ -9,7 +9,7 @@ namespace LT.DigitalOffice.EmailService.Mappers.Models
     private readonly IEmailInfoMapper _mapper;
 
     public UnsentEmailInfoMapper(
-        IEmailInfoMapper mapper)
+      IEmailInfoMapper mapper)
     {
       _mapper = mapper;
     }

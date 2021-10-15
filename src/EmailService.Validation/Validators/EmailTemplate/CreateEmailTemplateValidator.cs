@@ -28,8 +28,9 @@ namespace LT.DigitalOffice.EmailService.Validation.Validators.EmailTemplate
             .NotEmpty().WithMessage("Text must not be empty.");
 
           ett.RuleFor(ett => ett.Language)
+            .Cascade(CascadeMode.Stop)
             .NotEmpty().WithMessage("Language must not be empty.")
-            .Must(ett => ett.Trim().Length != 2).WithMessage("Language must contain two letters.");
+            .Must(ett => ett.Trim().Length == 2).WithMessage("Language must contain two letters.");
         });
     }
   }

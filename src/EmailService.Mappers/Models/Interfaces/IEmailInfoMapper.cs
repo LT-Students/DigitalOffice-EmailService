@@ -7,6 +7,6 @@ namespace LT.DigitalOffice.EmailService.Mappers.Models.Interfaces
   [AutoInject]
   public interface IEmailInfoMapper
   {
-    public EmailInfo Map(DbEmail dbEmail);
+    EmailInfo Map(DbEmail dbEmail);
   }
 }
