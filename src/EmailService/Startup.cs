@@ -24,6 +24,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace LT.DigitalOffice.EmailService
 {
@@ -99,10 +100,22 @@ namespace LT.DigitalOffice.EmailService
       IRequestClient<IGetSmtpCredentialsRequest> rcGetSmtpCredentials = serviceProvider.CreateRequestClient<IGetSmtpCredentialsRequest>(
         new Uri($"{_rabbitMqConfig.BaseUrl}/{_rabbitMqConfig.GetSmtpCredentialsEndpoint}"), default);
 
-
       var resender = new EmailResender(repository, logger, rcGetSmtpCredentials);
 
-      Task.Run(() => resender.StartResend(emailEngineConfig.ResendIntervalInMinutes, emailEngineConfig.MaxResendingCount));
+      int maxResendingCount = int.Parse(Environment.GetEnvironmentVariable("MaxResendingCount"));
+      int resendIntervalInMinutes = int.Parse(Environment.GetEnvironmentVariable("ResendIntervalInMinutes"));
+
+      if (maxResendingCount == default)
+      {
+        maxResendingCount = emailEngineConfig.MaxResendingCount;
+      }
+
+      if (resendIntervalInMinutes == default)
+      {
+        resendIntervalInMinutes = emailEngineConfig.ResendIntervalInMinutes;
+      }
+
+      Task.Run(() => resender.StartResend(resendIntervalInMinutes, maxResendingCount));
     }
 
     private void FindParseProperties(IApplicationBuilder app)
