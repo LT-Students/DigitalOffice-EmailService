@@ -8,7 +8,6 @@ using LT.DigitalOffice.Kernel.Constants;
 using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Responses;
-using Microsoft.AspNetCore.Http;
 
 namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
 {
@@ -16,18 +15,15 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
   {
     private readonly IAccessValidator _accessValidator;
     private readonly EmailSender _emailSender;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IResponseCreater _responseCreater;
 
     public ResendEmailCommand(
       IAccessValidator accessValidator,
       EmailSender emailSender,
-      IHttpContextAccessor httpContextAccessor,
       IResponseCreater responseCreater)
     {
       _accessValidator = accessValidator;
       _emailSender = emailSender;
-      _httpContextAccessor = httpContextAccessor;
       _responseCreater = responseCreater;
     }
 

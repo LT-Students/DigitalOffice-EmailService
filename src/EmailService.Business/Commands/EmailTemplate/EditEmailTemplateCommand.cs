@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using LT.DigitalOffice.Kernel.AccessValidatorEngine.Interfaces;
-using LT.DigitalOffice.Kernel.Constants;
-using LT.DigitalOffice.Kernel.Enums;
-using LT.DigitalOffice.Kernel.FluentValidationExtensions;
-using LT.DigitalOffice.Kernel.Responses;
+using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate.Interfaces;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Mappers.Db.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Dto.Requests.EmailTemplate;
 using LT.DigitalOffice.EmailService.Validation.Validators.EmailTemplate.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.JsonPatch;
-using System.Threading.Tasks;
+using LT.DigitalOffice.Kernel.AccessValidatorEngine.Interfaces;
+using LT.DigitalOffice.Kernel.Constants;
+using LT.DigitalOffice.Kernel.Enums;
+using LT.DigitalOffice.Kernel.FluentValidationExtensions;
 using LT.DigitalOffice.Kernel.Helpers.Interfaces;
+using LT.DigitalOffice.Kernel.Responses;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
 {
@@ -24,7 +23,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
     private readonly IEmailTemplateRepository _repository;
     private readonly IEditEmailTemplateValidator _validator;
     private readonly IPatchDbEmailTemplateMapper _mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IResponseCreater _responseCreater;
 
     public EditEmailTemplateCommand(
@@ -32,14 +30,12 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
       IEmailTemplateRepository repository,
       IEditEmailTemplateValidator validator,
       IPatchDbEmailTemplateMapper mapper,
-      IHttpContextAccessor httpContextAccessor,
       IResponseCreater responseCreater)
     {
       _validator = validator;
       _repository = repository;
       _accessValidator = accessValidator;
       _mapper = mapper;
-      _httpContextAccessor = httpContextAccessor;
       _responseCreater = responseCreater;
     }
 

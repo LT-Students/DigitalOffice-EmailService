@@ -13,7 +13,6 @@ using LT.DigitalOffice.Kernel.FluentValidationExtensions;
 using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Responses;
 using LT.DigitalOffice.Kernel.Validators.Interfaces;
-using Microsoft.AspNetCore.Http;
 
 namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
 {

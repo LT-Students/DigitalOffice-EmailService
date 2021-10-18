@@ -15,7 +15,6 @@ using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Requests;
 using LT.DigitalOffice.Kernel.Responses;
 using LT.DigitalOffice.Kernel.Validators.Interfaces;
-using Microsoft.AspNetCore.Http;
 
 namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
 {
@@ -25,7 +24,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
     private readonly IBaseFindFilterValidator _baseFindValidator;
     private readonly IUnsentEmailRepository _repository;
     private readonly IUnsentEmailInfoMapper _unsentEmailMapper;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IResponseCreater _responseCreater;
 
     public FindUnsentEmailsCommand(
@@ -33,14 +31,12 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
       IBaseFindFilterValidator baseFindValidator,
       IUnsentEmailRepository repository,
       IUnsentEmailInfoMapper mapper,
-      IHttpContextAccessor httpContextAccessor,
       IResponseCreater responseCreater)
     {
       _accessValidator = accessValidator;
       _baseFindValidator = baseFindValidator;
       _repository = repository;
       _unsentEmailMapper = mapper;
-      _httpContextAccessor = httpContextAccessor;
       _responseCreater = responseCreater;
     }
 

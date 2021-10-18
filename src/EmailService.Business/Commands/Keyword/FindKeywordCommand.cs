@@ -15,7 +15,6 @@ using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Requests;
 using LT.DigitalOffice.Kernel.Responses;
 using LT.DigitalOffice.Kernel.Validators.Interfaces;
-using Microsoft.AspNetCore.Http;
 
 namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
 {
@@ -25,7 +24,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
     private readonly IBaseFindFilterValidator _baseFindValidator;
     private readonly IKeywordRepository _repository;
     private readonly IKeywordInfoMapper _mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IResponseCreater _responseCreater;
 
     public FindKeywordCommand(
@@ -33,14 +31,12 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
       IBaseFindFilterValidator baseFindValidator,
       IKeywordRepository repository,
       IKeywordInfoMapper mapper,
-      IHttpContextAccessor httpContextAccessor,
       IResponseCreater responseCreater)
     {
       _accessValidator = accessValidator;
       _baseFindValidator = baseFindValidator;
       _repository = repository;
       _mapper = mapper;
-      _httpContextAccessor = httpContextAccessor;
       _responseCreater = responseCreater;
     }
 
