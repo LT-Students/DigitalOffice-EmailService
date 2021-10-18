@@ -13,7 +13,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
   public class UnsentEmailController : ControllerBase
   {
     [HttpDelete("resend")]
-    public async Task<OperationResultResponse<bool>> Resend(
+    public async Task<OperationResultResponse<bool>> ResendAsync(
       [FromServices] IResendEmailCommand command,
       [FromQuery] Guid unsentEmailId)
     {
@@ -21,7 +21,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
     }
 
     [HttpGet("find")]
-    public async Task<FindResultResponse<UnsentEmailInfo>> Find(
+    public async Task<FindResultResponse<UnsentEmailInfo>> FindAsync(
       [FromServices] IFindUnsentEmailsCommand command,
       [FromQuery] BaseFindFilter filter)
     {

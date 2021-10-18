@@ -11,6 +11,7 @@ using LT.DigitalOffice.EmailService.Models.Dto.Configurations;
 using LT.DigitalOffice.Kernel.Broker;
 using LT.DigitalOffice.Kernel.Configurations;
 using LT.DigitalOffice.Kernel.Extensions;
+using LT.DigitalOffice.Kernel.Helpers;
 using LT.DigitalOffice.Kernel.Middlewares.ApiInformation;
 using LT.DigitalOffice.Kernel.Middlewares.ParseEntities.Models.Requests;
 using LT.DigitalOffice.Kernel.Middlewares.ParseEntities.Models.Responses;
@@ -108,11 +109,21 @@ namespace LT.DigitalOffice.EmailService
       if (maxResendingCount == default)
       {
         maxResendingCount = emailEngineConfig.MaxResendingCount;
+        Log.Information($"Max resending count from appsettings.json was used. Value '{maxResendingCount}'.");
+      }
+      else
+      {
+        Log.Information($"Max resending count from environment was used. Value '{maxResendingCount}'.");
       }
 
       if (resendIntervalInMinutes == default)
       {
         resendIntervalInMinutes = emailEngineConfig.ResendIntervalInMinutes;
+        Log.Information($"Resen interval in minutes from appsettings.json was used. Value '{resendIntervalInMinutes}'.");
+      }
+      else
+      {
+        Log.Information($"Resend interval in minutes from environment was used. Value '{resendIntervalInMinutes}'.");
       }
 
       Task.Run(() => resender.StartResend(resendIntervalInMinutes, maxResendingCount));
@@ -184,8 +195,12 @@ namespace LT.DigitalOffice.EmailService
       if (string.IsNullOrEmpty(connStr))
       {
         connStr = Configuration.GetConnectionString("SQLConnectionString");
+        Log.Information($"SQL connection string from appsettings.json was used. Value '{HidePasswordHelper.HidePassword(connStr)}'.");
       }
-
+      else
+      {
+        Log.Information($"SQL connection string from environment was used. Value '{HidePasswordHelper.HidePassword(connStr)}'.");
+      }
       services.Configure<TokenConfiguration>(Configuration.GetSection("CheckTokenMiddleware"));
       services.Configure<BaseRabbitMqConfig>(Configuration.GetSection(BaseRabbitMqConfig.SectionName));
       services.Configure<BaseServiceInfoConfig>(Configuration.GetSection(BaseServiceInfoConfig.SectionName));

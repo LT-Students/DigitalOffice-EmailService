@@ -14,7 +14,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
   public class EmailTemplateTextController : ControllerBase
   {
     [HttpPost("create")]
-    public async Task<OperationResultResponse<Guid?>> Create(
+    public async Task<OperationResultResponse<Guid?>> CreateAsync(
       [FromServices] ICreateEmailTemplateTextCommand command,
       [FromBody] EmailTemplateTextRequest request)
     {
@@ -22,7 +22,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
     }
 
     [HttpPatch("edit")]
-    public async Task<OperationResultResponse<bool>> Edit(
+    public async Task<OperationResultResponse<bool>> EditAsync(
       [FromServices] IEditEmailTemplateTextCommand command,
       [FromQuery] Guid emailTemplateTextId,
       [FromBody] JsonPatchDocument<EditEmailTemplateTextRequest> patch)
