@@ -11,6 +11,7 @@ using LT.DigitalOffice.Kernel.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
 using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.FluentValidationExtensions;
+using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Responses;
 using Microsoft.AspNetCore.Http;
 
@@ -23,42 +24,36 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplateText
     private readonly IDbEmailTemplateTextMapper _mapper;
     private readonly IEmailTemplateTextRepository _repository;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IResponseCreater _responseCreater;
 
     public CreateEmailTemplateTextCommand(
       IAccessValidator accessValidator,
       ICreateEmailTemplateTextValidator validator,
       IDbEmailTemplateTextMapper mapper,
       IEmailTemplateTextRepository repository,
-      IHttpContextAccessor httpContextAccessor)
+      IHttpContextAccessor httpContextAccessor,
+      IResponseCreater responseCreater)
     {
       _accessValidator = accessValidator;
       _validator = validator;
       _mapper = mapper;
       _repository = repository;
       _httpContextAccessor = httpContextAccessor;
+      _responseCreater = responseCreater;
     }
 
     public async Task<OperationResultResponse<Guid?>> ExecuteAsync(EmailTemplateTextRequest request)
     {
-      if (!(await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates)))
+      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
       {
-        _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-
-        return new()
-        {
-          Status = OperationResultStatusType.Failed
-        };
+        return _responseCreater.CreateFailureResponse<Guid?>(HttpStatusCode.Forbidden);
       }
 
       if (!_validator.ValidateCustom(request, out List<string> errors))
       {
-        _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-
-        return new()
-        {
-          Status = OperationResultStatusType.Failed,
-          Errors = errors
-        };
+        return _responseCreater.CreateFailureResponse<Guid?>(
+          HttpStatusCode.BadRequest,
+          errors);
       }
 
       OperationResultResponse<Guid?> response = new();
@@ -70,9 +65,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplateText
 
       if (response.Body == null)
       {
-        _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-
-        response.Status = OperationResultStatusType.Failed;
+        response = _responseCreater.CreateFailureResponse<Guid?>(HttpStatusCode.BadRequest);
       }
 
       return response;

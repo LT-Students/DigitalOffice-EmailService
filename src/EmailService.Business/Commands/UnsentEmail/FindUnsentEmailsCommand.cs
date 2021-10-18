@@ -11,6 +11,7 @@ using LT.DigitalOffice.Kernel.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
 using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.FluentValidationExtensions;
+using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Requests;
 using LT.DigitalOffice.Kernel.Responses;
 using LT.DigitalOffice.Kernel.Validators.Interfaces;
@@ -25,42 +26,36 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
     private readonly IUnsentEmailRepository _repository;
     private readonly IUnsentEmailInfoMapper _unsentEmailMapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IResponseCreater _responseCreater;
 
     public FindUnsentEmailsCommand(
       IAccessValidator accessValidator,
       IBaseFindFilterValidator baseFindValidator,
       IUnsentEmailRepository repository,
       IUnsentEmailInfoMapper mapper,
-      IHttpContextAccessor httpContextAccessor)
+      IHttpContextAccessor httpContextAccessor,
+      IResponseCreater responseCreater)
     {
       _accessValidator = accessValidator;
       _baseFindValidator = baseFindValidator;
       _repository = repository;
       _unsentEmailMapper = mapper;
       _httpContextAccessor = httpContextAccessor;
+      _responseCreater = responseCreater;
     }
 
     public async Task<FindResultResponse<UnsentEmailInfo>> ExecuteAsync(BaseFindFilter filter)
     {
-      if (!(await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates)))
+      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
       {
-        _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-
-        return new()
-        {
-          Status = OperationResultStatusType.Failed
-        };
+        return _responseCreater.CreateFailureFindResponse<UnsentEmailInfo>(HttpStatusCode.Forbidden);
       }
 
       if (!_baseFindValidator.ValidateCustom(filter, out List<string> errors))
       {
-        _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-
-        return new()
-        {
-          Status = OperationResultStatusType.Failed,
-          Errors = errors
-        };
+        return _responseCreater.CreateFailureFindResponse<UnsentEmailInfo>(
+          HttpStatusCode.BadRequest,
+          errors);
       }
 
       (List<DbUnsentEmail> unsentEmailes, int totalCount) repositoryResponse = await _repository.FindAsync(filter);

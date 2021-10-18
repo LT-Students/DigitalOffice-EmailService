@@ -10,6 +10,7 @@ using LT.DigitalOffice.EmailService.Models.Dto.Models;
 using LT.DigitalOffice.EmailService.Models.Dto.Requests.EmailTemplate;
 using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.FluentValidationExtensions;
+using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Responses;
 using LT.DigitalOffice.Kernel.Validators.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -21,31 +22,27 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
     private readonly IBaseFindFilterValidator _baseFindValidator;
     private readonly IEmailTemplateRepository _repository;
     private readonly IEmailTemplateInfoMapper _mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IResponseCreater _responseCreater;
 
     public FindEmailTemplateCommand(
       IBaseFindFilterValidator baseFindValidator,
       IEmailTemplateRepository repository,
       IEmailTemplateInfoMapper mapper,
-      IHttpContextAccessor httpContextAccessor)
+      IResponseCreater responseCreater)
     {
       _baseFindValidator = baseFindValidator;
       _repository = repository;
       _mapper = mapper;
-      _httpContextAccessor = httpContextAccessor;
+      _responseCreater = responseCreater;
     }
 
     public async Task<FindResultResponse<EmailTemplateInfo>> ExecuteAsync(FindEmailTemplateFilter filter)
     {
-      FindResultResponse<EmailTemplateInfo> response = new();
-
       if (!_baseFindValidator.ValidateCustom(filter, out List<string> errors))
       {
-        _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-
-        response.Status = OperationResultStatusType.Failed;
-        response.Errors = errors;
-        return response;
+        return _responseCreater.CreateFailureFindResponse<EmailTemplateInfo>(
+          HttpStatusCode.BadRequest,
+          errors);
       }
 
       (List<DbEmailTemplate> dbEmailTempates, int totalCount) repositoryResponse =

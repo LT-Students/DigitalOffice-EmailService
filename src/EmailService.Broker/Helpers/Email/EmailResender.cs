@@ -34,10 +34,10 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
     }
 
     public EmailResender(
-        IUnsentEmailRepository unsentEmailRepository,
-        ILogger<EmailResender> logger,
-        IRequestClient<IGetSmtpCredentialsRequest> rcGetSmtpCredentials)
-      : base(rcGetSmtpCredentials, logger)
+      IUnsentEmailRepository unsentEmailRepository,
+      ILogger<EmailResender> logger,
+      IRequestClient<IGetSmtpCredentialsRequest> rcGetSmtpCredentials)
+    : base(rcGetSmtpCredentials, logger)
     {
       _unsentEmailRepository = unsentEmailRepository;
     }
