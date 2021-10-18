@@ -25,7 +25,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Consumers
         "Start email sending to '{receiver}'.",
         request.Email);
 
-      var dbEmailTemplateText = await GetDbEmailTemplateTextAsync(request);
+      DbEmailTemplateText dbEmailTemplateText = await GetDbEmailTemplateTextAsync(request);
 
       if (dbEmailTemplateText == null)
       {
@@ -50,7 +50,8 @@ namespace LT.DigitalOffice.EmailService.Broker.Consumers
         dbEmailTemplate = await _templateRepository.GetAsync((int)request.Type);
       }
 
-      var dbEmailTemplateText = dbEmailTemplate?.EmailTemplateTexts.FirstOrDefault(ett => ett.Language == request.Language);
+      DbEmailTemplateText dbEmailTemplateText = dbEmailTemplate?.EmailTemplateTexts
+        .FirstOrDefault(ett => ett.Language == request.Language);
 
       if (dbEmailTemplateText == null)
       {

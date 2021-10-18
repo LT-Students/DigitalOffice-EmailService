@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
+using LT.DigitalOffice.EmailService.Models.Db;
 using LT.DigitalOffice.Models.Broker.Requests.Company;
 using MassTransit;
 using Microsoft.Extensions.Logging;
@@ -15,7 +17,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
     {
       while (true)
       {
-        var unsentEmails = await _unsentEmailRepository.GetAllAsync(maxResendingCount);
+        List<DbUnsentEmail> unsentEmails = await _unsentEmailRepository.GetAllAsync(maxResendingCount);
 
         foreach (var email in unsentEmails)
         {
