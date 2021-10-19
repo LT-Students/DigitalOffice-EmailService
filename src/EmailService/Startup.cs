@@ -103,10 +103,7 @@ namespace LT.DigitalOffice.EmailService
 
       var resender = new EmailResender(repository, logger, rcGetSmtpCredentials);
 
-      int.TryParse(Environment.GetEnvironmentVariable("MaxResendingCount"), out int maxResendingCount);
-      int.TryParse(Environment.GetEnvironmentVariable("ResendIntervalInMinutes"), out int resendIntervalInMinutes);
-
-      if (maxResendingCount == default)
+      if (!int.TryParse(Environment.GetEnvironmentVariable("MaxResendingCount"), out int maxResendingCount))
       {
         maxResendingCount = emailEngineConfig.MaxResendingCount;
         Log.Information($"Max resending count from appsettings.json was used. Value '{maxResendingCount}'.");
@@ -116,7 +113,7 @@ namespace LT.DigitalOffice.EmailService
         Log.Information($"Max resending count from environment was used. Value '{maxResendingCount}'.");
       }
 
-      if (resendIntervalInMinutes == default)
+      if (!int.TryParse(Environment.GetEnvironmentVariable("ResendIntervalInMinutes"), out int resendIntervalInMinutes))
       {
         resendIntervalInMinutes = emailEngineConfig.ResendIntervalInMinutes;
         Log.Information($"Resen interval in minutes from appsettings.json was used. Value '{resendIntervalInMinutes}'.");
