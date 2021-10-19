@@ -103,8 +103,8 @@ namespace LT.DigitalOffice.EmailService
 
       var resender = new EmailResender(repository, logger, rcGetSmtpCredentials);
 
-      int maxResendingCount = int.Parse(Environment.GetEnvironmentVariable("MaxResendingCount"));
-      int resendIntervalInMinutes = int.Parse(Environment.GetEnvironmentVariable("ResendIntervalInMinutes"));
+      int.TryParse(Environment.GetEnvironmentVariable("MaxResendingCount"), out int maxResendingCount);
+      int.TryParse(Environment.GetEnvironmentVariable("ResendIntervalInMinutes"), out int resendIntervalInMinutes);
 
       if (maxResendingCount == default)
       {
