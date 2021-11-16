@@ -11,7 +11,7 @@ namespace LT.DigitalOffice.EmailService.Data.Provider.MsSql.Ef.Migrations
 {
   [DbContext(typeof(EmailServiceDbContext))]
   [Migration("20211611160500_CreateModuleSettings")]
-  class _20211611160500_CreateModuleSettings : Migration
+  public class _20211611160500_CreateModuleSettings : Migration
   {
     protected override void Up(MigrationBuilder builder)
     {
