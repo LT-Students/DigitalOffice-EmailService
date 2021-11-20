@@ -14,5 +14,6 @@ namespace LT.DigitalOffice.EmailService.Data.Provider
     DbSet<DbEmailTemplateText> EmailTemplateTexts { get; set; }
     DbSet<DbUnsentEmail> UnsentEmails { get; set; }
     DbSet<DbKeyword> ParseEntities { get; set; }
+    DbSet<DbModuleSetting> ModuleSettings { get; set; }
   }
 }
