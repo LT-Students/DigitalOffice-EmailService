@@ -23,7 +23,6 @@ namespace LT.DigitalOffice.EmailService.Broker.Consumers
         EnableSsl = request.EnableSsl,
         Email = request.Email,
         Password = request.Password,
-        CreatedBy = request.CreatedBy,
         CreatedAtUtc = DateTime.UtcNow,
       };
 
