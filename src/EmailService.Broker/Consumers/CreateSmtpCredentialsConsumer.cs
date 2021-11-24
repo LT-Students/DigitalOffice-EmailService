@@ -27,9 +27,9 @@ namespace LT.DigitalOffice.EmailService.Broker.Consumers
       };
 
       _cache.Set(dbModuleSetting.Id, dbModuleSetting);
-      await _repository.CreateAsync(dbModuleSetting);
+      bool result = await _repository.CreateAsync(dbModuleSetting);
 
-      return true;
+      return result;
     }
 
     public CreateSmtpCredentialsConsumer(

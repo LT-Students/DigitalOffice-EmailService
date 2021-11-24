@@ -7,6 +7,6 @@ namespace LT.DigitalOffice.EmailService.Data.Interfaces
   [AutoInject]
   public interface ISmtpSettingsRepository
   {
-    Task CreateAsync(DbModuleSetting dbModuleSetting);
+    Task<bool> CreateAsync(DbModuleSetting dbModuleSetting);
   }
 }

@@ -14,15 +14,17 @@ namespace LT.DigitalOffice.EmailService.Data
       _provider = provider;
     }
 
-    public async Task CreateAsync(DbModuleSetting dbModuleSetting)
+    public async Task<bool> CreateAsync(DbModuleSetting dbModuleSetting)
     {
       if (dbModuleSetting is null)
       {
-        return;
+        return false;
       }
 
       _provider.ModuleSettings.Add(dbModuleSetting);
       await _provider.SaveAsync();
+
+      return true;
     }
   }
 }
