@@ -73,7 +73,7 @@ namespace LT.DigitalOffice.EmailService
       services.AddMassTransit(x =>
       {
         x.AddConsumer<SendEmailConsumer>();
-        x.AddConsumer<UpdateSmtpCredentialsConsumer>();
+        x.AddConsumer<CreateSmtpCredentialsConsumer>();
 
         x.UsingRabbitMq((context, cfg) =>
         {
@@ -88,9 +88,9 @@ namespace LT.DigitalOffice.EmailService
             ep.ConfigureConsumer<SendEmailConsumer>(context);
           });
 
-          cfg.ReceiveEndpoint(_rabbitMqConfig.UpdateSmtpCredentialsEndpoint, ep =>
+          cfg.ReceiveEndpoint(_rabbitMqConfig.CreateSmtpCredentialsEndpoint, ep =>
           {
-            ep.ConfigureConsumer<UpdateSmtpCredentialsConsumer>(context);
+            ep.ConfigureConsumer<CreateSmtpCredentialsConsumer>(context);
           });
         });
 
@@ -249,6 +249,8 @@ namespace LT.DigitalOffice.EmailService
       services.AddBusinessObjects();
 
       services.AddTransient<EmailSender>();
+
+      services.AddMemoryCache();
 
       ConfigureMassTransit(services);
     }

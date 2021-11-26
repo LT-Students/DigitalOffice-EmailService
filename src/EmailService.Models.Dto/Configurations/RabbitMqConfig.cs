@@ -8,7 +8,7 @@ namespace LT.DigitalOffice.EmailService.Models.Dto.Configurations
   public class RabbitMqConfig : BaseRabbitMqConfig
   {
     public string SendEmailEndpoint { get; set; }
-    public string UpdateSmtpCredentialsEndpoint { get; set; }
+    public string CreateSmtpCredentialsEndpoint { get; set; }
     public Dictionary<string, string> FindUserParseEntitiesEndpoint { get; set; }
 
     [AutoInjectRequest(typeof(IGetSmtpCredentialsRequest))]
