@@ -3,7 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Broker.Helpers.ParseEntity;
 using LT.DigitalOffice.EmailService.Business.Commands.ParseEntity.Interface;
-using LT.DigitalOffice.Kernel.AccessValidatorEngine.Interfaces;
+using LT.DigitalOffice.Kernel.BrokerSupport.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
 using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.Helpers.Interfaces;
@@ -16,23 +16,23 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
   {
     private readonly IAccessValidator _accessValidator;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IResponseCreater _responseCreater;
+    private readonly IResponseCreator _responseCreator;
 
     public FindParseEntitiesCommand(
       IAccessValidator accessValidator,
       IHttpContextAccessor httpContextAccessor,
-      IResponseCreater responseCreater)
+      IResponseCreator responseCreator)
     {
       _accessValidator = accessValidator;
       _httpContextAccessor = httpContextAccessor;
-      _responseCreater = responseCreater;
+      _responseCreator = responseCreator;
     }
 
     public async Task<OperationResultResponse<Dictionary<string, Dictionary<string, List<string>>>>> ExecuteAsync()
     {
       if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
       {
-        return _responseCreater
+        return _responseCreator
           .CreateFailureResponse<Dictionary<string, Dictionary<string, List<string>>>>(
             HttpStatusCode.Forbidden);
       }

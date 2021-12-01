@@ -7,7 +7,7 @@ using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Mappers.Db.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Dto.Requests.EmailTemplate;
 using LT.DigitalOffice.EmailService.Validation.Validators.EmailTemplateText.Interfaces;
-using LT.DigitalOffice.Kernel.AccessValidatorEngine.Interfaces;
+using LT.DigitalOffice.Kernel.BrokerSupport.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
 using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.FluentValidationExtensions;
@@ -24,7 +24,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplateText
     private readonly IDbEmailTemplateTextMapper _mapper;
     private readonly IEmailTemplateTextRepository _repository;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IResponseCreater _responseCreater;
+    private readonly IResponseCreator _responseCreator;
 
     public CreateEmailTemplateTextCommand(
       IAccessValidator accessValidator,
@@ -32,26 +32,26 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplateText
       IDbEmailTemplateTextMapper mapper,
       IEmailTemplateTextRepository repository,
       IHttpContextAccessor httpContextAccessor,
-      IResponseCreater responseCreater)
+      IResponseCreator responseCreator)
     {
       _accessValidator = accessValidator;
       _validator = validator;
       _mapper = mapper;
       _repository = repository;
       _httpContextAccessor = httpContextAccessor;
-      _responseCreater = responseCreater;
+      _responseCreator = responseCreator;
     }
 
     public async Task<OperationResultResponse<Guid?>> ExecuteAsync(EmailTemplateTextRequest request)
     {
       if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
       {
-        return _responseCreater.CreateFailureResponse<Guid?>(HttpStatusCode.Forbidden);
+        return _responseCreator.CreateFailureResponse<Guid?>(HttpStatusCode.Forbidden);
       }
 
       if (!_validator.ValidateCustom(request, out List<string> errors))
       {
-        return _responseCreater.CreateFailureResponse<Guid?>(
+        return _responseCreator.CreateFailureResponse<Guid?>(
           HttpStatusCode.BadRequest,
           errors);
       }
@@ -65,7 +65,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplateText
 
       if (response.Body == null)
       {
-        response = _responseCreater.CreateFailureResponse<Guid?>(HttpStatusCode.BadRequest);
+        response = _responseCreator.CreateFailureResponse<Guid?>(HttpStatusCode.BadRequest);
       }
 
       return response;

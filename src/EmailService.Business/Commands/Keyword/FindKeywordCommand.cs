@@ -7,7 +7,7 @@ using LT.DigitalOffice.EmailService.Business.Commands.ParseEntity.Interface;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
 using LT.DigitalOffice.EmailService.Models.Dto;
-using LT.DigitalOffice.Kernel.AccessValidatorEngine.Interfaces;
+using LT.DigitalOffice.Kernel.BrokerSupport.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
 using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.FluentValidationExtensions;
@@ -24,32 +24,32 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ParseEntity
     private readonly IBaseFindFilterValidator _baseFindValidator;
     private readonly IKeywordRepository _repository;
     private readonly IKeywordInfoMapper _mapper;
-    private readonly IResponseCreater _responseCreater;
+    private readonly IResponseCreator _responseCreator;
 
     public FindKeywordCommand(
       IAccessValidator accessValidator,
       IBaseFindFilterValidator baseFindValidator,
       IKeywordRepository repository,
       IKeywordInfoMapper mapper,
-      IResponseCreater responseCreater)
+      IResponseCreator responseCreator)
     {
       _accessValidator = accessValidator;
       _baseFindValidator = baseFindValidator;
       _repository = repository;
       _mapper = mapper;
-      _responseCreater = responseCreater;
+      _responseCreator = responseCreator;
     }
 
     public async Task<FindResultResponse<KeywordInfo>> ExecuteAsync(BaseFindFilter filter)
     {
       if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
       {
-        return _responseCreater.CreateFailureFindResponse<KeywordInfo>(HttpStatusCode.Forbidden);
+        return _responseCreator.CreateFailureFindResponse<KeywordInfo>(HttpStatusCode.Forbidden);
       }
 
       if (!_baseFindValidator.ValidateCustom(filter, out List<string> errors))
       {
-        return _responseCreater.CreateFailureFindResponse<KeywordInfo>(
+        return _responseCreator.CreateFailureFindResponse<KeywordInfo>(
           HttpStatusCode.BadRequest,
           errors);
       }

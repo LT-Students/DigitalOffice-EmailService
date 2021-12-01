@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
-using LT.DigitalOffice.Kernel.Broker;
-using MassTransit;
+using LT.DigitalOffice.Kernel.BrokerSupport.Broker;
 using LT.DigitalOffice.Models.Broker.Requests.Email;
+using MassTransit;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace LT.DigitalOffice.EmailService.Broker.Consumers
