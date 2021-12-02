@@ -21,25 +21,25 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.EmailTemplate
     private readonly IBaseFindFilterValidator _baseFindValidator;
     private readonly IEmailTemplateRepository _repository;
     private readonly IEmailTemplateInfoMapper _mapper;
-    private readonly IResponseCreater _responseCreater;
+    private readonly IResponseCreator _responseCreator;
 
     public FindEmailTemplateCommand(
       IBaseFindFilterValidator baseFindValidator,
       IEmailTemplateRepository repository,
       IEmailTemplateInfoMapper mapper,
-      IResponseCreater responseCreater)
+      IResponseCreator responseCreator)
     {
       _baseFindValidator = baseFindValidator;
       _repository = repository;
       _mapper = mapper;
-      _responseCreater = responseCreater;
+      _responseCreator = responseCreator;
     }
 
     public async Task<FindResultResponse<EmailTemplateInfo>> ExecuteAsync(FindEmailTemplateFilter filter)
     {
       if (!_baseFindValidator.ValidateCustom(filter, out List<string> errors))
       {
-        return _responseCreater.CreateFailureFindResponse<EmailTemplateInfo>(
+        return _responseCreator.CreateFailureFindResponse<EmailTemplateInfo>(
           HttpStatusCode.BadRequest,
           errors);
       }
