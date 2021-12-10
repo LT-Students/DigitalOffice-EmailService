@@ -7,7 +7,7 @@ using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Mappers.Models.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
 using LT.DigitalOffice.EmailService.Models.Dto.Models;
-using LT.DigitalOffice.Kernel.AccessValidatorEngine.Interfaces;
+using LT.DigitalOffice.Kernel.BrokerSupport.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
 using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.FluentValidationExtensions;
@@ -24,32 +24,32 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
     private readonly IBaseFindFilterValidator _baseFindValidator;
     private readonly IUnsentEmailRepository _repository;
     private readonly IUnsentEmailInfoMapper _unsentEmailMapper;
-    private readonly IResponseCreater _responseCreater;
+    private readonly IResponseCreator _responseCreator;
 
     public FindUnsentEmailsCommand(
       IAccessValidator accessValidator,
       IBaseFindFilterValidator baseFindValidator,
       IUnsentEmailRepository repository,
       IUnsentEmailInfoMapper mapper,
-      IResponseCreater responseCreater)
+      IResponseCreator responseCreator)
     {
       _accessValidator = accessValidator;
       _baseFindValidator = baseFindValidator;
       _repository = repository;
       _unsentEmailMapper = mapper;
-      _responseCreater = responseCreater;
+      _responseCreator = responseCreator;
     }
 
     public async Task<FindResultResponse<UnsentEmailInfo>> ExecuteAsync(BaseFindFilter filter)
     {
       if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
       {
-        return _responseCreater.CreateFailureFindResponse<UnsentEmailInfo>(HttpStatusCode.Forbidden);
+        return _responseCreator.CreateFailureFindResponse<UnsentEmailInfo>(HttpStatusCode.Forbidden);
       }
 
       if (!_baseFindValidator.ValidateCustom(filter, out List<string> errors))
       {
-        return _responseCreater.CreateFailureFindResponse<UnsentEmailInfo>(
+        return _responseCreator.CreateFailureFindResponse<UnsentEmailInfo>(
           HttpStatusCode.BadRequest,
           errors);
       }

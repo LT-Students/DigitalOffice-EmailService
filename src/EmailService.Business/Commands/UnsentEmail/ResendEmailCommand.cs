@@ -3,7 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Broker.Helpers;
 using LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail.Interfaces;
-using LT.DigitalOffice.Kernel.AccessValidatorEngine.Interfaces;
+using LT.DigitalOffice.Kernel.BrokerSupport.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
 using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.Helpers.Interfaces;
@@ -15,23 +15,23 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
   {
     private readonly IAccessValidator _accessValidator;
     private readonly EmailSender _emailSender;
-    private readonly IResponseCreater _responseCreater;
+    private readonly IResponseCreator _responseCreator;
 
     public ResendEmailCommand(
       IAccessValidator accessValidator,
       EmailSender emailSender,
-      IResponseCreater responseCreater)
+      IResponseCreator responseCreator)
     {
       _accessValidator = accessValidator;
       _emailSender = emailSender;
-      _responseCreater = responseCreater;
+      _responseCreator = responseCreator;
     }
 
     public async Task<OperationResultResponse<bool>> ExecuteAsync(Guid id)
     {
       if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
       {
-        return _responseCreater.CreateFailureResponse<bool>(HttpStatusCode.Forbidden);
+        return _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.Forbidden);
       }
 
       bool isSuccess = await _emailSender.ResendEmail(id);

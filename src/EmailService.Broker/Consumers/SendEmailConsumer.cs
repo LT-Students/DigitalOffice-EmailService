@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Broker.Helpers;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
-using LT.DigitalOffice.Kernel.Broker;
+using LT.DigitalOffice.Kernel.BrokerSupport.Broker;
 using LT.DigitalOffice.Models.Broker.Requests.Message;
 using MassTransit;
 using Microsoft.Extensions.Logging;
