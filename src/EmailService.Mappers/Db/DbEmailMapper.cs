@@ -10,7 +10,7 @@ namespace LT.DigitalOffice.EmailService.Mappers.Db.Email
     public DbEmail Map(
       ISendEmailRequest request)
     {
-      if (request == null)
+      if (request is null)
       {
         return null;
       }
