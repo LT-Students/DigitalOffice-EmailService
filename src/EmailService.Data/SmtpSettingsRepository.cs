@@ -16,9 +16,11 @@ namespace LT.DigitalOffice.EmailService.Data
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public SmtpSettingsRepository(
-      IDataProvider provider)
+      IDataProvider provider,
+      IHttpContextAccessor httpContextAccessor)
     {
       _provider = provider;
+      _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<bool> CreateAsync(DbModuleSetting dbModuleSetting)
