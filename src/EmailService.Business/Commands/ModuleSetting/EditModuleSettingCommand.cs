@@ -54,7 +54,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
       OperationResultResponse<bool> response = new();
 
       response.Body = await _repository.EditAsync(moduleSettingId, _mapper.Map(patch));
-      response.Status = OperationResultStatusType.FullSuccess;
 
       if (!response.Body)
       {

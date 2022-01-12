@@ -47,7 +47,7 @@ namespace LT.DigitalOffice.EmailService.Validation.Validators.ModuleSetting
         x => x == OperationType.Replace,
         new()
         {
-          { x => string.IsNullOrWhiteSpace(x.value?.ToString().Trim()), "Host must not be empty." },
+          { x => string.IsNullOrWhiteSpace(x.value?.ToString()), "Host must not be empty." },
         });
 
       #endregion
@@ -108,10 +108,6 @@ namespace LT.DigitalOffice.EmailService.Validation.Validators.ModuleSetting
         new()
         {
           { x => !string.IsNullOrWhiteSpace(x.value?.ToString()), "Password must not be empty." },
-          { x => x.value.ToString().Length >= 8, "Password is too short." },
-          { x => x.value.ToString().Length <= 14, "Password is too long." },
-          { x => PasswordRegex.IsMatch(x.value.ToString()), "The password must contain at least one special character." },
-          { x => !x.value.ToString().Contains(' '), "Password must not contain space." }
         });
 
       #endregion
