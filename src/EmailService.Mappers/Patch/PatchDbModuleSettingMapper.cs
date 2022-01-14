@@ -19,7 +19,7 @@ namespace LT.DigitalOffice.EmailService.Mappers.Patch
 
       foreach (var item in request.Operations)
       {
-        dbPatch.Operations.Add(new Operation<DbModuleSetting>(item.op, item.path, item.from, item.value));
+        dbPatch.Operations.Add(new Operation<DbModuleSetting>(item.op, item.path, item.from, item.value.ToString().Trim()));
       }
 
       return dbPatch;

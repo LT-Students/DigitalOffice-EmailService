@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Mail;
-using System.Text.RegularExpressions;
 using FluentValidation;
 using FluentValidation.Validators;
 using LT.DigitalOffice.EmailService.Models.Dto.Requests.ModuleSetting;
@@ -13,8 +11,6 @@ namespace LT.DigitalOffice.EmailService.Validation.Validators.ModuleSetting
 {
   public class EditModuleSettingRequestValidator : BaseEditRequestValidator<EditModuleSettingRequest>, IEditModuleSettingRequestValidator
   {
-    private static Regex PasswordRegex = new(@"(?=.*[.,:;?!*+%\-<>@[\]{}/\\_{}$#])");
-
     private void HandleInternalPropertyValidation(Operation<EditModuleSettingRequest> requestedOperation, CustomContext context)
     {
       Context = context;
@@ -47,7 +43,7 @@ namespace LT.DigitalOffice.EmailService.Validation.Validators.ModuleSetting
         x => x == OperationType.Replace,
         new()
         {
-          { x => string.IsNullOrWhiteSpace(x.value?.ToString()), "Host must not be empty." },
+          { x => !string.IsNullOrWhiteSpace(x.value?.ToString()), "Host must not be empty." },
         });
 
       #endregion
@@ -83,7 +79,7 @@ namespace LT.DigitalOffice.EmailService.Validation.Validators.ModuleSetting
         x => x == OperationType.Replace,
         new()
         {
-          { x => 
+          { x =>
             {
               try
               {
