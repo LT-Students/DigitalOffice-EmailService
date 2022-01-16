@@ -37,6 +37,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
       _repository = repository;
       _mapper = mapper;
     }
+
     public async Task<OperationResultResponse<bool>> ExecuteAsync(
       Guid moduleSettingId,
       JsonPatchDocument<EditModuleSettingRequest> patch)
