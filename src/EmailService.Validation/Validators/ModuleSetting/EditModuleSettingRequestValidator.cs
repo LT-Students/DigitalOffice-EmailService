@@ -111,7 +111,8 @@ namespace LT.DigitalOffice.EmailService.Validation.Validators.ModuleSetting
 
     public EditModuleSettingRequestValidator()
     {
-      RuleForEach(x => x.Operations).Custom(HandleInternalPropertyValidation);
+      RuleForEach(x => x.Operations)
+        .Custom(HandleInternalPropertyValidation);
     }
   }
 }
