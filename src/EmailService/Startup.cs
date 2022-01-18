@@ -197,7 +197,7 @@ namespace LT.DigitalOffice.EmailService
         .GetSection(BaseRabbitMqConfig.SectionName)
         .Get<RabbitMqConfig>();
 
-      Version = "1.0.0.0";
+      Version = "1.0.1.0";
       Description = "EmailService, is intended to work with the emails and email templates.";
       StartTime = DateTime.UtcNow;
       ApiName = $"LT Digital Office - {_serviceInfoConfig.Name}";
