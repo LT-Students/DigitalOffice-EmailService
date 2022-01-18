@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using HealthChecks.UI.Client;
 using LT.DigitalOffice.EmailService.Broker.Consumers;
 using LT.DigitalOffice.EmailService.Broker.Helpers;
@@ -18,7 +17,6 @@ using LT.DigitalOffice.Kernel.Configurations;
 using LT.DigitalOffice.Kernel.Extensions;
 using LT.DigitalOffice.Kernel.Helpers;
 using LT.DigitalOffice.Kernel.Middlewares.ApiInformation;
-using LT.DigitalOffice.Models.Broker.Requests.Company;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -127,33 +125,6 @@ namespace LT.DigitalOffice.EmailService
 
       ILoggerFactory loggerFactory = scope.ServiceProvider.GetRequiredService<ILoggerFactory>();
       ILogger<EmailResender> logger = loggerFactory.CreateLogger<EmailResender>();
-
-      IRequestClient<IGetSmtpCredentialsRequest> rcGetSmtpCredentials = serviceProvider.CreateRequestClient<IGetSmtpCredentialsRequest>(
-        new Uri($"{_rabbitMqConfig.BaseUrl}/{_rabbitMqConfig.GetSmtpCredentialsEndpoint}"), default);
-
-      var resender = new EmailResender(repository, logger, rcGetSmtpCredentials);
-
-      if (!int.TryParse(Environment.GetEnvironmentVariable("MaxResendingCount"), out int maxResendingCount))
-      {
-        maxResendingCount = emailEngineConfig.MaxResendingCount;
-        Log.Information($"Max resending count from appsettings.json was used. Value '{maxResendingCount}'.");
-      }
-      else
-      {
-        Log.Information($"Max resending count from environment was used. Value '{maxResendingCount}'.");
-      }
-
-      if (!int.TryParse(Environment.GetEnvironmentVariable("ResendIntervalInMinutes"), out int resendIntervalInMinutes))
-      {
-        resendIntervalInMinutes = emailEngineConfig.ResendIntervalInMinutes;
-        Log.Information($"Resen interval in minutes from appsettings.json was used. Value '{resendIntervalInMinutes}'.");
-      }
-      else
-      {
-        Log.Information($"Resend interval in minutes from environment was used. Value '{resendIntervalInMinutes}'.");
-      }
-
-      Task.Run(() => resender.StartResend(resendIntervalInMinutes, maxResendingCount));
     }
 
     private void FindParseProperties(IApplicationBuilder app)

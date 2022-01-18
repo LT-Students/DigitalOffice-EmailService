@@ -8,7 +8,6 @@ using LT.DigitalOffice.EmailService.Mappers.Patch.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Dto.Requests.ModuleSetting;
 using LT.DigitalOffice.EmailService.Validation.Validators.ModuleSetting.Interfaces;
 using LT.DigitalOffice.Kernel.BrokerSupport.AccessValidatorEngine.Interfaces;
-using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.FluentValidationExtensions;
 using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Responses;
@@ -23,6 +22,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
     private readonly IEditModuleSettingRequestValidator _validator;
     private readonly ISmtpSettingsRepository _repository;
     private readonly IPatchDbModuleSettingMapper _mapper;
+
 
     public EditModuleSettingCommand(
       IAccessValidator accessValidator,
@@ -61,6 +61,8 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
         response = _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.BadRequest);
       }
 
+      SmtpCredentials a =
+        
       return response;
     }
   }
