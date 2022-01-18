@@ -63,7 +63,7 @@ namespace LT.DigitalOffice.EmailService.Validation.Validators.EmailTemplateText
         new()
         {
           { x => !string.IsNullOrEmpty(x.value?.ToString().Trim()), "Language must not be empty." },
-          { x => x.value.ToString().Trim().Length != 2, "Language must contain two letters." },
+          { x => x.value.ToString().Trim().Length == 2, "Language must contain two letters." },
         }, CascadeMode.Stop);
 
       #endregion
