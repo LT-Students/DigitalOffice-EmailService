@@ -8,5 +8,7 @@ namespace LT.DigitalOffice.EmailService.Data.Interfaces
   public interface ISmtpSettingsRepository
   {
     Task<bool> CreateAsync(DbModuleSetting dbModuleSetting);
+
+    Task<DbModuleSetting> GetAsync();
   }
 }

@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Data.Provider;
 using LT.DigitalOffice.EmailService.Models.Db;
+using Microsoft.EntityFrameworkCore;
 
 namespace LT.DigitalOffice.EmailService.Data
 {
@@ -25,6 +27,12 @@ namespace LT.DigitalOffice.EmailService.Data
       await _provider.SaveAsync();
 
       return true;
+    }
+
+    public async Task<DbModuleSetting> GetAsync()
+    {
+
+      return await _provider.ModuleSettings.FirstOrDefaultAsync();
     }
   }
 }
