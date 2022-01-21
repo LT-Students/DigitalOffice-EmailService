@@ -36,8 +36,8 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
     public EmailResender(
       IUnsentEmailRepository unsentEmailRepository,
       ILogger<EmailResender> logger,
-      ISmtpSettingsRepository rcGetSmtpCredentials)
-    : base(rcGetSmtpCredentials, logger)
+      ISmtpSettingsRepository getSmtpCredentials)
+    : base(getSmtpCredentials, logger)
     {
       _unsentEmailRepository = unsentEmailRepository;
     }

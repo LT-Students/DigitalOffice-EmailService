@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using HealthChecks.UI.Client;
 using LT.DigitalOffice.EmailService.Broker.Consumers;
 using LT.DigitalOffice.EmailService.Broker.Helpers;
@@ -122,9 +123,34 @@ namespace LT.DigitalOffice.EmailService
       var scope = app.ApplicationServices.CreateScope();
 
       IUnsentEmailRepository repository = scope.ServiceProvider.GetRequiredService<IUnsentEmailRepository>();
+      ISmtpSettingsRepository getSmtpCredentials = scope.ServiceProvider.GetRequiredService<ISmtpSettingsRepository>();
 
       ILoggerFactory loggerFactory = scope.ServiceProvider.GetRequiredService<ILoggerFactory>();
       ILogger<EmailResender> logger = loggerFactory.CreateLogger<EmailResender>();
+       
+      var resender = new EmailResender(repository, logger, getSmtpCredentials);
+
+      if (!int.TryParse(Environment.GetEnvironmentVariable("MaxResendingCount"), out int maxResendingCount))
+      {
+        maxResendingCount = emailEngineConfig.MaxResendingCount;
+        Log.Information($"Max resending count from appsettings.json was used. Value '{maxResendingCount}'.");
+      }
+      else
+      {
+        Log.Information($"Max resending count from environment was used. Value '{maxResendingCount}'.");
+      }
+
+      if (!int.TryParse(Environment.GetEnvironmentVariable("ResendIntervalInMinutes"), out int resendIntervalInMinutes))
+      {
+        resendIntervalInMinutes = emailEngineConfig.ResendIntervalInMinutes;
+        Log.Information($"Resen interval in minutes from appsettings.json was used. Value '{resendIntervalInMinutes}'.");
+      }
+      else
+      {
+        Log.Information($"Resend interval in minutes from environment was used. Value '{resendIntervalInMinutes}'.");
+      }
+
+      Task.Run(() => resender.StartResend(resendIntervalInMinutes, maxResendingCount));
     }
 
     private void FindParseProperties(IApplicationBuilder app)

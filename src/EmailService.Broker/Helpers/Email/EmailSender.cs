@@ -13,10 +13,10 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
     public EmailSender(
       ILogger<EmailSender> logger,
-      ISmtpSettingsRepository rcGetSmtpCredentials,
+      ISmtpSettingsRepository getSmtpCredentials,
       IEmailRepository emailRepository,
       IUnsentEmailRepository unsentEmailRepository)
-    : base(rcGetSmtpCredentials, logger)
+    : base(getSmtpCredentials, logger)
     {
       _emailRepository = emailRepository;
       _unsentEmailRepository = unsentEmailRepository;
