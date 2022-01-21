@@ -12,6 +12,8 @@ using LT.DigitalOffice.Kernel.FluentValidationExtensions;
 using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Responses;
 using Microsoft.AspNetCore.JsonPatch;
+using LT.DigitalOffice.EmailService.Models.Dto.Helpers;
+using LT.DigitalOffice.EmailService.Models.Db;
 
 namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
 {
@@ -59,7 +61,15 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
       {
         response = _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.BadRequest);
       }
+      DbModuleSetting dbModuleSetting = await _repository.GetAsync();
 
+      SmtpCredentials.SetSmtpValue(
+        dbModuleSetting.Host,
+        dbModuleSetting.Port,
+        dbModuleSetting.EnableSsl,
+        dbModuleSetting.Email,
+        dbModuleSetting.Password);
+      
       return response;
     }
   }

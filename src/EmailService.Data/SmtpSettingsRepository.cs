@@ -57,12 +57,6 @@ namespace LT.DigitalOffice.EmailService.Data
       dbModuleSetting.ModifiedAtUtc = DateTime.UtcNow;
       await _provider.SaveAsync();
 
-      SmtpCredentials.Host = dbModuleSetting.Host;
-      SmtpCredentials.Port = dbModuleSetting.Port;
-      SmtpCredentials.Email = dbModuleSetting.Email;
-      SmtpCredentials.Password = dbModuleSetting.Password;
-      SmtpCredentials.EnableSsl = dbModuleSetting.EnableSsl;
-
       return true;
     }
 
