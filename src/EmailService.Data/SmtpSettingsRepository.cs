@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-﻿using System.Linq;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Data.Provider;
 using LT.DigitalOffice.EmailService.Models.Db;
+using LT.DigitalOffice.EmailService.Models.Dto.Helpers;
 using LT.DigitalOffice.Kernel.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
@@ -57,12 +57,17 @@ namespace LT.DigitalOffice.EmailService.Data
       dbModuleSetting.ModifiedAtUtc = DateTime.UtcNow;
       await _provider.SaveAsync();
 
+      SmtpCredentials.Host = dbModuleSetting.Host;
+      SmtpCredentials.Port = dbModuleSetting.Port;
+      SmtpCredentials.Email = dbModuleSetting.Email;
+      SmtpCredentials.Password = dbModuleSetting.Password;
+      SmtpCredentials.EnableSsl = dbModuleSetting.EnableSsl;
+
       return true;
     }
 
     public async Task<DbModuleSetting> GetAsync()
     {
-
       return await _provider.ModuleSettings.FirstOrDefaultAsync();
     }
   }

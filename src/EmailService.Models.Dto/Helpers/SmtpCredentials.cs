@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("LT.DigitalOffice.EmailService.Broker")]
+[assembly: InternalsVisibleTo("LT.DigitalOffice.EmailService.Broker"), 
+           InternalsVisibleTo("LT.DigitalOffice.EmailService.Data")]
 namespace LT.DigitalOffice.EmailService.Models.Dto.Helpers
 {
   internal static class SmtpCredentials

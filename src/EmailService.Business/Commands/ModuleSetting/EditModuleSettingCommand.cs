@@ -23,7 +23,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
     private readonly ISmtpSettingsRepository _repository;
     private readonly IPatchDbModuleSettingMapper _mapper;
 
-
     public EditModuleSettingCommand(
       IAccessValidator accessValidator,
       IResponseCreator responseCreator,
@@ -61,8 +60,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
         response = _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.BadRequest);
       }
 
-      SmtpCredentials a =
-        
       return response;
     }
   }
