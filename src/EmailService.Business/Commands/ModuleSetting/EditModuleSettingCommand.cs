@@ -59,7 +59,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
 
       if (!response.Body)
       {
-        response = _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.BadRequest);
+        return _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.BadRequest);
       }
       DbModuleSetting dbModuleSetting = await _repository.GetAsync();
 

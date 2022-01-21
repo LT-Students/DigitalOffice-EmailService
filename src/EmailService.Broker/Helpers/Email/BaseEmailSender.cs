@@ -16,8 +16,6 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
     private async Task<bool> GetSmtpCredentialsAsync()
     {
-      string logMessage = "Cannot get smtp credentials.";
-
       DbModuleSetting result = await _repository.GetAsync();
 
       if (result != null)
@@ -31,7 +29,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
         return true;
       }
  
-      _logger?.LogError(logMessage);
+      _logger?.LogError("Cannot get smtp credentials.");
 
       return false;
     }
