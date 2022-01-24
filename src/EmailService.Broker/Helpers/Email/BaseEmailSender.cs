@@ -2,48 +2,34 @@
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
 using LT.DigitalOffice.EmailService.Models.Dto.Helpers;
-using LT.DigitalOffice.Kernel.BrokerSupport.Broker;
-using LT.DigitalOffice.Models.Broker.Requests.Company;
-using LT.DigitalOffice.Models.Broker.Responses.Company;
-using MassTransit;
 using Microsoft.Extensions.Logging;
 
 namespace LT.DigitalOffice.EmailService.Broker.Helpers
 {
   public abstract class BaseEmailSender
   {
-    private readonly IRequestClient<IGetSmtpCredentialsRequest> _rcGetSmtpCredentials;
+    private readonly ISmtpSettingsRepository _repository;
     protected readonly ILogger _logger;
 
     private async Task<bool> GetSmtpCredentialsAsync()
     {
-      string logMessage = "Cannot get smtp credentials.";
+      DbModuleSetting result = await _repository.GetAsync();
 
-      try
+      if (result != null)
       {
-        IOperationResult<IGetSmtpCredentialsResponse> result =
-          (await _rcGetSmtpCredentials.GetResponse<IOperationResult<IGetSmtpCredentialsResponse>>(
-            IGetSmtpCredentialsRequest.CreateObj())).Message;
+        SmtpCredentials.Host = result.Host;
+        SmtpCredentials.Port = result.Port;
+        SmtpCredentials.Email = result.Email;
+        SmtpCredentials.Password = result.Password;
+        SmtpCredentials.EnableSsl = result.EnableSsl;
 
-        if (result.IsSuccess)
-        {
-          SmtpCredentials.Host = result.Body.Host;
-          SmtpCredentials.Port = result.Body.Port;
-          SmtpCredentials.Email = result.Body.Email;
-          SmtpCredentials.Password = result.Body.Password;
-          SmtpCredentials.EnableSsl = result.Body.EnableSsl;
-
-          return true;
-        }
-
-        _logger?.LogWarning(logMessage);
+        return true;
       }
-      catch (Exception exc)
-      {
-        _logger?.LogError(exc, logMessage);
-      }
+ 
+      _logger?.LogError("Cannot get smtp credentials.");
 
       return false;
     }
@@ -91,10 +77,10 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
     }
 
     public BaseEmailSender(
-      IRequestClient<IGetSmtpCredentialsRequest> rcGetSmtpCredentials,
+      ISmtpSettingsRepository repository,
       ILogger logger)
     {
-      _rcGetSmtpCredentials = rcGetSmtpCredentials;
+      _repository = repository;
       _logger = logger;
     }
   }

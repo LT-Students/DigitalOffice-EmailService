@@ -18,7 +18,6 @@ using LT.DigitalOffice.Kernel.Configurations;
 using LT.DigitalOffice.Kernel.Extensions;
 using LT.DigitalOffice.Kernel.Helpers;
 using LT.DigitalOffice.Kernel.Middlewares.ApiInformation;
-using LT.DigitalOffice.Models.Broker.Requests.Company;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -124,14 +123,12 @@ namespace LT.DigitalOffice.EmailService
       var scope = app.ApplicationServices.CreateScope();
 
       IUnsentEmailRepository repository = scope.ServiceProvider.GetRequiredService<IUnsentEmailRepository>();
+      ISmtpSettingsRepository getSmtpCredentials = scope.ServiceProvider.GetRequiredService<ISmtpSettingsRepository>();
 
       ILoggerFactory loggerFactory = scope.ServiceProvider.GetRequiredService<ILoggerFactory>();
       ILogger<EmailResender> logger = loggerFactory.CreateLogger<EmailResender>();
-
-      IRequestClient<IGetSmtpCredentialsRequest> rcGetSmtpCredentials = serviceProvider.CreateRequestClient<IGetSmtpCredentialsRequest>(
-        new Uri($"{_rabbitMqConfig.BaseUrl}/{_rabbitMqConfig.GetSmtpCredentialsEndpoint}"), default);
-
-      var resender = new EmailResender(repository, logger, rcGetSmtpCredentials);
+       
+      var resender = new EmailResender(repository, logger, getSmtpCredentials);
 
       if (!int.TryParse(Environment.GetEnvironmentVariable("MaxResendingCount"), out int maxResendingCount))
       {

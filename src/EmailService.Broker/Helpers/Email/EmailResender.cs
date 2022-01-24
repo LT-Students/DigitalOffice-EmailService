@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
-using LT.DigitalOffice.Models.Broker.Requests.Company;
-using MassTransit;
 using Microsoft.Extensions.Logging;
 
 namespace LT.DigitalOffice.EmailService.Broker.Helpers
@@ -38,8 +36,8 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
     public EmailResender(
       IUnsentEmailRepository unsentEmailRepository,
       ILogger<EmailResender> logger,
-      IRequestClient<IGetSmtpCredentialsRequest> rcGetSmtpCredentials)
-    : base(rcGetSmtpCredentials, logger)
+      ISmtpSettingsRepository getSmtpCredentials)
+    : base(getSmtpCredentials, logger)
     {
       _unsentEmailRepository = unsentEmailRepository;
     }

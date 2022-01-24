@@ -11,7 +11,6 @@ namespace LT.DigitalOffice.EmailService.Broker.Consumers
 {
   public class CreateSmtpCredentialsConsumer : IConsumer<ICreateSmtpCredentialsRequest>
   {
-    private readonly IMemoryCache _cache;
     private readonly ISmtpSettingsRepository _repository;
     private async Task<object> CreateCredentials(ICreateSmtpCredentialsRequest request)
     {
@@ -26,7 +25,6 @@ namespace LT.DigitalOffice.EmailService.Broker.Consumers
         CreatedAtUtc = DateTime.UtcNow,
       };
 
-      _cache.Set(dbModuleSetting.Id, dbModuleSetting);
       bool result = await _repository.CreateAsync(dbModuleSetting);
 
       return result;
@@ -36,7 +34,6 @@ namespace LT.DigitalOffice.EmailService.Broker.Consumers
       IMemoryCache cache,
       ISmtpSettingsRepository repository)
     {
-      _cache = cache;
       _repository = repository;
     }
     public async Task Consume(ConsumeContext<ICreateSmtpCredentialsRequest> context)

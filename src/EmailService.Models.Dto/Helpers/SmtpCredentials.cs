@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("LT.DigitalOffice.EmailService.Broker")]
+[assembly: InternalsVisibleTo("LT.DigitalOffice.EmailService.Broker"), 
+           InternalsVisibleTo("LT.DigitalOffice.EmailService.Business")]
 namespace LT.DigitalOffice.EmailService.Models.Dto.Helpers
 {
   internal static class SmtpCredentials
@@ -20,6 +21,19 @@ namespace LT.DigitalOffice.EmailService.Models.Dto.Helpers
           string.IsNullOrEmpty(Email) ||
           string.IsNullOrEmpty(Password));
       }
+    }
+    public static void SetSmtpValue(
+      string host, 
+      int port, 
+      bool enableSsl, 
+      string email, 
+      string password)
+    {
+      Host = host;
+      Port = port;
+      EnableSsl = enableSsl;
+      Email = email;
+      Password = password;
     }
   }
 }

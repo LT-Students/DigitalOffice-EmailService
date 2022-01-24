@@ -10,7 +10,7 @@ namespace LT.DigitalOffice.EmailService.Controllers
 {
   [Route("[controller]")]
   [ApiController]
-  public class ModuleSettingController
+  public class ModuleSettingController : ControllerBase
   {
     [HttpPatch("edit")]
     public async Task<OperationResultResponse<bool>> EditAsync(
