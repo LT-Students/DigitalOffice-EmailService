@@ -12,7 +12,7 @@ namespace LT.DigitalOffice.EmailService.Models.Db
     public Guid? SenderId { get; set; }
     public string Receiver { get; set; }
     public string Subject { get; set; }
-    public string Body { get; set; }
+    public string Text { get; set; }
     public DateTime CreatedAtUtc { get; set; }
 
     public DbUnsentEmail UnsentEmail { get; set; }
@@ -37,7 +37,7 @@ namespace LT.DigitalOffice.EmailService.Models.Db
         .IsRequired();
 
       builder
-        .Property(e => e.Body)
+        .Property(e => e.Text)
         .IsRequired();
 
       builder

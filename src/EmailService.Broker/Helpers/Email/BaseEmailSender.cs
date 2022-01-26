@@ -48,7 +48,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
         dbEmail.Receiver)
         {
           Subject = dbEmail.Subject,
-          Body = dbEmail.Body
+          Body = dbEmail.Text
         };
 
         SmtpClient smtp = new SmtpClient(

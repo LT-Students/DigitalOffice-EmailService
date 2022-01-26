@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Broker.Helpers;
-using LT.DigitalOffice.EmailService.Models.Dto;
 using LT.DigitalOffice.Kernel.BrokerSupport.Broker;
+using LT.DigitalOffice.Models.Broker.Requests.Email;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 
