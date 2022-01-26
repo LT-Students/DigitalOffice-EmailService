@@ -29,55 +29,6 @@ namespace LT.DigitalOffice.MessageService.Data.Provider.MsSql.Ef.Migrations
         });
 
       builder.CreateTable(
-        name: DbEmailTemplate.TableName,
-        columns: table => new
-        {
-          Id = table.Column<Guid>(nullable: false),
-          Name = table.Column<string>(nullable: false),
-          Type = table.Column<int>(nullable: false),
-          IsActive = table.Column<bool>(nullable: false),
-          CreatedBy = table.Column<Guid>(nullable: false),
-          CreatedAtUtc = table.Column<DateTime>(nullable: false),
-          ModifiedBy = table.Column<Guid>(nullable: true),
-          ModifiedAtUtc = table.Column<DateTime>(nullable: true)
-        },
-        constraints: table =>
-        {
-          table.PrimaryKey($"PK_{DbEmailTemplate.TableName}", x => x.Id);
-        });
-
-      builder.CreateTable(
-        name: DbEmailTemplateText.TableName,
-        columns: table => new
-        {
-          Id = table.Column<Guid>(nullable: false),
-          EmailTemplateId = table.Column<Guid>(nullable: false),
-          Subject = table.Column<string>(nullable: false),
-          Text = table.Column<string>(nullable: false),
-          Language = table.Column<string>(nullable: false, maxLength: 2)
-        },
-        constraints: table =>
-        {
-          table.PrimaryKey($"PK_{DbEmailTemplateText.TableName}", x => x.Id);
-        });
-
-      builder.CreateTable(
-        name: DbKeyword.TableName,
-        columns: table => new
-        {
-          Id = table.Column<Guid>(nullable: false),
-          Keyword = table.Column<string>(nullable: false, maxLength: 50),
-          ServiceName = table.Column<int>(nullable: false),
-          EntityName = table.Column<string>(nullable: false),
-          PropertyName = table.Column<string>(nullable: false)
-        },
-        constraints: table =>
-        {
-          table.PrimaryKey("PK_Keyword", p => p.Id);
-          table.UniqueConstraint("UC_Keyword", p => p.Keyword);
-        });
-
-      builder.CreateTable(
         name: DbUnsentEmail.TableName,
         columns: table => new
         {
@@ -97,15 +48,6 @@ namespace LT.DigitalOffice.MessageService.Data.Provider.MsSql.Ef.Migrations
     {
       builder.DropTable(
         name: DbEmail.TableName);
-
-      builder.DropTable(
-        name: DbEmailTemplate.TableName);
-
-      builder.DropTable(
-        name: DbEmailTemplateText.TableName);
-
-      builder.DropTable(
-        name: DbKeyword.TableName);
 
       builder.DropTable(
         name: DbUnsentEmail.TableName);

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Data.Provider;
 using LT.DigitalOffice.EmailService.Models.Db;
-using LT.DigitalOffice.EmailService.Models.Dto.Helpers;
 using LT.DigitalOffice.Kernel.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
