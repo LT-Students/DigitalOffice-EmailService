@@ -1,7 +1,7 @@
 ﻿using System;
 using LT.DigitalOffice.EmailService.Mappers.Db.Email.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
-using LT.DigitalOffice.Models.Broker.Requests.Message;
+using LT.DigitalOffice.Models.Broker.Requests.Email;
 
 namespace LT.DigitalOffice.EmailService.Mappers.Db.Email
 {
@@ -10,7 +10,7 @@ namespace LT.DigitalOffice.EmailService.Mappers.Db.Email
     public DbEmail Map(
       ISendEmailRequest request)
     {
-      if (request == null)
+      if (request is null)
       {
         return null;
       }
@@ -19,7 +19,7 @@ namespace LT.DigitalOffice.EmailService.Mappers.Db.Email
       {
         Id = Guid.NewGuid(),
         SenderId = request.SenderId,
-        Receiver = request.Email,
+        Receiver = request.Receiver,
         CreatedAtUtc = DateTime.UtcNow
       };
     }
