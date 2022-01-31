@@ -1,6 +1,6 @@
 ﻿using LT.DigitalOffice.EmailService.Models.Db;
 using LT.DigitalOffice.Kernel.Attributes;
-using LT.DigitalOffice.Models.Broker.Requests.Message;
+using LT.DigitalOffice.Models.Broker.Requests.Email;
 
 namespace LT.DigitalOffice.EmailService.Mappers.Db.Email.Interfaces
 {

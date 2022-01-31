@@ -16,7 +16,7 @@ namespace LT.DigitalOffice.EmailService.Mappers.Models
       return new EmailInfo
       {
         Id = dbEmail.Id,
-        Body = dbEmail.Body,
+        Body = dbEmail.Text,
         Subject = dbEmail.Subject,
         Receiver = dbEmail.Receiver
       };

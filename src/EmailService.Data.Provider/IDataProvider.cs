@@ -10,10 +10,7 @@ namespace LT.DigitalOffice.EmailService.Data.Provider
   public interface IDataProvider : IBaseDataProvider
   {
     DbSet<DbEmail> Emails { get; set; }
-    DbSet<DbEmailTemplate> EmailTemplates { get; set; }
-    DbSet<DbEmailTemplateText> EmailTemplateTexts { get; set; }
     DbSet<DbUnsentEmail> UnsentEmails { get; set; }
-    DbSet<DbKeyword> ParseEntities { get; set; }
     DbSet<DbModuleSetting> ModuleSettings { get; set; }
   }
 }

@@ -17,10 +17,7 @@ namespace LT.DigitalOffice.EmailService.Data.Provider.MsSql.Ef
     }
 
     public DbSet<DbEmail> Emails { get; set; }
-    public DbSet<DbEmailTemplate> EmailTemplates { get; set; }
-    public DbSet<DbEmailTemplateText> EmailTemplateTexts { get; set; }
     public DbSet<DbUnsentEmail> UnsentEmails { get; set; }
-    public DbSet<DbKeyword> ParseEntities { get; set; }
     public DbSet<DbModuleSetting> ModuleSettings { get; set; }
 
     void IBaseDataProvider.Save()
