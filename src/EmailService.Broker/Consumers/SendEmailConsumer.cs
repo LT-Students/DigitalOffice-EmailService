@@ -21,7 +21,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Consumers
 
       return request is null
         ? false
-        : await _sender.SendEmailAsync(request.Receiver, request.Subject, request.Text);
+        : await _sender.SendEmailAsync(request.Receiver, request.Subject, request.Text, request.SenderId);
     }
 
     public SendEmailConsumer(

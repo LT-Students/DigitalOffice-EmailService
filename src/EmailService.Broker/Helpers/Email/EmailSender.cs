@@ -22,14 +22,19 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
       _unsentEmailRepository = unsentEmailRepository;
     }
 
-    public async Task<bool> SendEmailAsync(string receiver, string subject, string text)
+    public async Task<bool> SendEmailAsync(
+      string receiver,
+      string subject,
+      string text,
+      Guid? senderId = null)
     {
       DbEmail dbEmail = new()
       {
         Id = Guid.NewGuid(),
-        Text = text,
-        Subject = subject,
+        SenderId = senderId,
         Receiver = receiver,
+        Subject = subject,
+        Text = text,
         CreatedAtUtc = DateTime.UtcNow
       };
 
